@@ -15,8 +15,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Middleware para redirigir a HTTPS y mostrar un mensaje
 app.use((req, res, next) => {
   if (!req.secure) {
-    res.send('Redirigiendo a HTTPS...');
-    res.redirect(`https://${req.headers.host}${req.url}`);
+    res.status(200).send(`
+      <html>
+        <body>
+          <p>Redirigiendo a HTTPS...</p>
+          <script>
+            setTimeout(function() {
+              window.location.href = 'https://' + window.location.host + window.location.pathname;
+            }, 3000);
+          </script>
+        </body>
+      </html>
+    `);
   } else {
     next();
   }
