@@ -47,7 +47,7 @@ http.createServer(app).listen(port, () => {
   app.use((req, res, next) => {
     if (!isLocal(req) && req.protocol !== 'https') {
       // Si no es localhost y la solicitud no es HTTPS, redirigir a HTTPS
-      return res.redirect('https://' + req.headers.host.replace(port, '3443') + req.url);
+      return res.redirect('https://' + req.headers.host.replace(port, '3000') + req.url);
     }
     next();
   });
