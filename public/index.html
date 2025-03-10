@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .message {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Mensaje del Servidor</h1>
+    <div class="message" id="welcome-message">Cargando mensaje...</div>
+
+    <script>
+        // Hacer una solicitud GET a tu servidor Express
+        fetch('http://localhost:3000/')
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar el mensaje de bienvenida en la página
+                document.getElementById('welcome-message').textContent = data.message;
+            })
+            .catch(error => {
+                console.error('Error al obtener el mensaje:', error);
+                document.getElementById('welcome-message').textContent = 'Error al cargar el mensaje.';
+            });
+    </script>
+
+</body>
+</html>
