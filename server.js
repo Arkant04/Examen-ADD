@@ -18,21 +18,15 @@ app.use(cors({
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Endpoint GET / que devuelve un mensaje de bienvenida
+// Endpoint GET / que devuelve la página index.html
 app.get('/', (req, res) => {
-  res.json({ message: '¡Bienvenido al servidor!' });
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // Configuración del servidor HTTPS
 const httpsOptions = {
   key: fs.readFileSync(path.join(__dirname, 'privkey.pem')), // Ruta a tu archivo .key
   cert: fs.readFileSync(path.join(__dirname, 'fullchain.pem')) // Ruta a tu archivo .pem
-};
-
-// Detectar si la solicitud viene desde localhost o VPS
-const isLocal = (req) => {
-  const host = req.hostname; // Obtén el nombre del host
-  return host === 'localhost' || host === '127.0.0.1'; // Verifica si es localhost o IP local
 };
 
 // Crear servidor HTTPS (solo para VPS)
@@ -43,12 +37,4 @@ https.createServer(httpsOptions, app).listen(3443, () => {
 // Crear servidor HTTP (para localhost)
 http.createServer(app).listen(port, () => {
   console.log(`Servidor HTTP en http://localhost:${port}`);
-  // Si no es localhost, redirigir a HTTPS
-  app.use((req, res, next) => {
-    if (!isLocal(req) && req.protocol !== 'https') {
-      // Si no es localhost y la solicitud no es HTTPS, redirigir a HTTPS
-      return res.redirect('https://' + req.headers.host.replace(port, '3000') + req.url);
-    }
-    next();
-  });
 });
