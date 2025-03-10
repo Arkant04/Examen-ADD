@@ -45,10 +45,10 @@ const httpsOptions = {
 
 // Crear servidor HTTPS (solo para VPS)
 https.createServer(httpsOptions, app).listen(httpsPort, () => {
-  console.log(`Servidor HTTPS en https://localhost:${httpsPort}`);
+  console.log(`Servidor HTTPS en https://dev4.cyberbunny.online:${httpsPort}`);
 });
 
 // Crear servidor HTTP (para localhost)
 http.createServer(app).listen(port, () => {
-  console.log(`Servidor HTTP en http://localhost:${port}`);
+  console.log(`Servidor HTTP en http://dev4.cyberbunny.online:${port}`);
 });
