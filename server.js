@@ -25,8 +25,8 @@ app.get('/', (req, res) => {
 
 // Configuración del servidor HTTPS
 const httpsOptions = {
-  key: fs.readFileSync(path.join(__dirname, 'certs', 'privkey.pem')), // Ruta a tu archivo .key
-  cert: fs.readFileSync(path.join(__dirname, 'certs', 'fullchain.pem')) // Ruta a tu archivo .pem
+  key: fs.readFileSync(path.join(__dirname, 'privkey.pem')), // Ruta a tu archivo .key
+  cert: fs.readFileSync(path.join(__dirname, 'fullchain.pem')) // Ruta a tu archivo .pem
 };
 
 // Detectar si la solicitud viene desde localhost o VPS
