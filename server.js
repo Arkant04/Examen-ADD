@@ -31,7 +31,7 @@ const httpsOptions = {
 
 // Crear servidor HTTPS (solo para VPS)
 https.createServer(httpsOptions, app).listen(port, () => {
-  console.log(`Servidor HTTPS en https://localhost:3443`);
+  console.log(`Servidor HTTPS en https://localhost:${port}`);
 });
 
 // Crear servidor HTTP (para localhost)
