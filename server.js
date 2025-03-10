@@ -6,12 +6,21 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 const port = 3000;
-
-
+const httpsPort = 3443;
 
 // Middleware para parsear el cuerpo de las peticiones en formato JSON
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Middleware para redirigir a HTTPS y mostrar un mensaje
+app.use((req, res, next) => {
+  if (!req.secure) {
+    res.send('Redirigiendo a HTTPS...');
+    res.redirect(`https://${req.headers.host}${req.url}`);
+  } else {
+    next();
+  }
+});
 
 // Endpoint GET / que devuelve la página index.html
 app.get('/', (req, res) => {
@@ -25,8 +34,8 @@ const httpsOptions = {
 };
 
 // Crear servidor HTTPS (solo para VPS)
-https.createServer(httpsOptions, app).listen(3443, () => {
-  console.log(`Servidor HTTPS en https://localhost:3443`);
+https.createServer(httpsOptions, app).listen(httpsPort, () => {
+  console.log(`Servidor HTTPS en https://localhost:${httpsPort}`);
 });
 
 // Crear servidor HTTP (para localhost)
